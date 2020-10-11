@@ -1,12 +1,15 @@
 package com.blackroot.movie.gallery.api.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -31,6 +34,9 @@ public class Rol implements Serializable{
 	
 	@Column(name = "code")
 	private String code;
+	
+	@OneToMany(mappedBy = "rol", fetch = FetchType.LAZY)
+	private Set<User> user;
 
 	public Rol(Integer id, String name, String description, String code) {
 		super();
@@ -76,9 +82,10 @@ public class Rol implements Serializable{
 		this.code = code;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Rol [id=" + id + ", name=" + name + ", description=" + description + ", code=" + code + "]";
-	}
+	}	
 
 }

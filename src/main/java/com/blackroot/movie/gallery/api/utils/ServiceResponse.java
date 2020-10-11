@@ -1,14 +1,17 @@
 package com.blackroot.movie.gallery.api.utils;
 
-import org.springframework.boot.info.BuildProperties;
-
 public class ServiceResponse {
 
+	public static final String codeOk = "00";
+	public static final String messageOk = "Request proccesed satisfactorily";
 	
+	public static  final String codeFail = "99";
+	public static final String messageFail = "Request failed";
+
 	private String code;
-	
+
 	private String message;
-	
+
 	private Object result;
 
 	public String getCode() {
@@ -45,6 +48,5 @@ public class ServiceResponse {
 	public ServiceResponse() {
 		super();
 	}
-	
-	
+
 }

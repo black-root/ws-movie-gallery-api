@@ -6,18 +6,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blackroot.movie.gallery.api.service.RolServiceImpl;
+import com.blackroot.movie.gallery.api.service.UserServiceImpl;
 import com.blackroot.movie.gallery.api.utils.ServiceResponse;
 
 @RestController
-@RequestMapping(value = "rols")
-public class RolController {
+@RequestMapping(value = "users")
+public class UserController {
 
 	@Autowired
-	private RolServiceImpl rolServiceImpl;
+	private UserServiceImpl userServiceImpl;
 	
 	@GetMapping
 	public ResponseEntity<ServiceResponse> findAll(){
-		return rolServiceImpl.findAll();
+		return userServiceImpl.findAll();
 	}
 }
