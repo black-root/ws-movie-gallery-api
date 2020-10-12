@@ -20,13 +20,13 @@ public class MovieCategory implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id", length = 3)
 	private Integer id;
 	
-	@Column(name = "name")
+	@Column(name = "name", length = 50)
 	private String name;
 	
-	@Column(name = "description", nullable = true)
+	@Column(name = "description", nullable = true, length = 200)
 	private String description;
 
 	public MovieCategory(Integer id, String name, String description) {
@@ -62,6 +62,43 @@ public class MovieCategory implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MovieCategory other = (MovieCategory) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 
 	@Override
