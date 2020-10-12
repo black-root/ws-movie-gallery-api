@@ -12,7 +12,9 @@ public interface MovieService {
 	
 	public abstract ResponseEntity<ServiceResponse> deleteMovie();
 	
-	public abstract ResponseEntity<ServiceResponse> findByAvailabilityStatus(boolean avaibility);
+	public abstract ResponseEntity<ServiceResponse> findByAvailabilityStatus(boolean avaibility, Integer page, Integer per_page);
+
+	public abstract ResponseEntity<ServiceResponse> findByAvailabilityStatusTrue(Integer page, Integer per_page);
 	
 	
 }

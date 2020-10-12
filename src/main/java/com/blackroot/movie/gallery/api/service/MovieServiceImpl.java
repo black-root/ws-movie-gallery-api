@@ -3,6 +3,10 @@ package com.blackroot.movie.gallery.api.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -47,14 +51,49 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public ResponseEntity<ServiceResponse> findByAvailabilityStatus(boolean avaibility) {
+	public ResponseEntity<ServiceResponse> findByAvailabilityStatus(boolean avaibility, Integer page,
+			Integer per_page) {
 		try {
-			return new ResponseEntity<ServiceResponse>(
-					new ServiceResponse(ServiceResponse.codeOk, ServiceResponse.messageOk, movieRepository.findByAvailabilityStatus(avaibility)),
-					HttpStatus.OK);
+			if (page != null || per_page != null) {
+				Pageable sortedBytitle = PageRequest.of(page, per_page, Sort.by("tittle"));
+				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
+						ServiceResponse.messageOk, movieRepository.findByAvailabilityStatus(avaibility, sortedBytitle)),
+						HttpStatus.OK);
+			} else {
+				Pageable sortedBytitle = PageRequest.of(0, 10, Sort.by("tittle"));
+				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
+						ServiceResponse.messageOk, movieRepository.findByAvailabilityStatus(true, sortedBytitle)),
+						HttpStatus.OK);
+			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
-			log.error("Issue to find All data " + e.getMessage());
+			log.error("Issue to find the data " + e.getMessage());
+			return new ResponseEntity<ServiceResponse>(
+					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Override
+	public ResponseEntity<ServiceResponse> findByAvailabilityStatusTrue(Integer page, Integer per_page) {
+		try {
+
+			if (page != null || per_page != null) {
+				Pageable sortedBytitle = PageRequest.of(page, per_page, Sort.by("tittle"));
+				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
+						ServiceResponse.messageOk, movieRepository.findByAvailabilityStatus(true, sortedBytitle)),
+						HttpStatus.OK);
+			} else {
+				Pageable sortedBytitle = PageRequest.of(0, 10, Sort.by("tittle"));
+				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
+						ServiceResponse.messageOk, movieRepository.findByAvailabilityStatus(true, sortedBytitle)),
+						HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error("Issue to find the data " + e.getMessage());
 			return new ResponseEntity<ServiceResponse>(
 					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, e.getMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
