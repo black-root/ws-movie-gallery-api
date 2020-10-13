@@ -4,9 +4,11 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,5 +45,15 @@ public class MovieController {
 	@PostMapping
 	public ResponseEntity<ServiceResponse> addMovie(@RequestBody Movie movie){
 		return movieService.addMovie(movie);
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<ServiceResponse> deleteMovieById(@PathVariable("id") int id){
+		return movieService.deleteMovie(id);
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<ServiceResponse> modifyAvaibilityMovie(@PathVariable("id") int id){
+		return movieService.modifyAvaibilityMovie(id);
 	}
 }

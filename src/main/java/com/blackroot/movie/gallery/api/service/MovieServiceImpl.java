@@ -22,7 +22,7 @@ public class MovieServiceImpl implements MovieService {
 
 	@Autowired
 	private MovieRepository movieRepository;
-	
+
 	@Override
 	public ResponseEntity<ServiceResponse> findAll(Integer page, Integer per_page) {
 
@@ -30,9 +30,9 @@ public class MovieServiceImpl implements MovieService {
 			if (page != null || per_page != null) {
 				Pageable sortedBytitle = PageRequest.of(page, per_page, Sort.by("tittle"));
 				Page<Movie> movies = movieRepository.findAll(sortedBytitle);
-			
-				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
-						ServiceResponse.messageOk, movies), HttpStatus.OK);
+
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeOk, ServiceResponse.messageOk, movies), HttpStatus.OK);
 			} else {
 				Pageable sortedBytitle = PageRequest.of(0, 10, Sort.by("tittle"));
 				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
@@ -50,31 +50,44 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public ResponseEntity<ServiceResponse> addMovie(Movie movie) {
-		Movie result =  new Movie();
+		Movie result = new Movie();
 		try {
-			//validateService.validator.validate(movie);
+			// validateService.validator.validate(movie);
 			log.info(movie.toString());
 			result = movieRepository.save(movie);
-			
-			if(result!=null) {
-				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
-						ServiceResponse.messageOk, result), HttpStatus.CREATED);
+
+			if (result != null) {
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeOk, ServiceResponse.messageOk, result),
+						HttpStatus.CREATED);
 			} else {
-				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeFail,
-						ServiceResponse.messageFail, result), HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, result),
+						HttpStatus.BAD_REQUEST);
 			}
-			
+
 		} catch (Exception e) {
-			log.error("Problems to process the request "+e.getMessage());
-			return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeFail,
-					ServiceResponse.messageFail, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			log.error("Problems to process the request " + e.getMessage());
+			return new ResponseEntity<ServiceResponse>(
+					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@Override
-	public ResponseEntity<ServiceResponse> deleteMovie() {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<ServiceResponse> deleteMovie(int idMovie) {
+		try {
+			movieRepository.deleteById(idMovie);
+			return new ResponseEntity<ServiceResponse>(
+					new ServiceResponse(ServiceResponse.codeOk, ServiceResponse.messageOk, "Movie deleted"),
+					HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			log.error("Problems to process the request in order to delete a movie by ID " + e.getMessage());
+			return new ResponseEntity<ServiceResponse>(
+					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail,
+							"Id: " + idMovie + " doesn't exist, Consider to use a digit id"),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@Override
@@ -120,6 +133,36 @@ public class MovieServiceImpl implements MovieService {
 
 		} catch (Exception e) {
 			// TODO: handle exception
+			log.error("Issue to find the data " + e.getMessage());
+			return new ResponseEntity<ServiceResponse>(
+					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Override
+	public ResponseEntity<ServiceResponse> modifyAvaibilityMovie(int id) {
+		try {
+			Movie movie = movieRepository.findById(id).get(), result;
+
+			if (movie != null) {
+				if (movie.getAvailabilityStatus() == false) {
+					movie.setAvailability_status(true);
+				} else {
+					movie.setAvailability_status(false);
+				}
+
+				result = movieRepository.save(movie);
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeOk, ServiceResponse.messageOk, result),
+						HttpStatus.ACCEPTED);
+			} else {
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeOk, ServiceResponse.messageOk, "Movie not found to change its status"),
+						HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
 			log.error("Issue to find the data " + e.getMessage());
 			return new ResponseEntity<ServiceResponse>(
 					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, e.getMessage()),
