@@ -56,4 +56,9 @@ public class MovieController {
 	public ResponseEntity<ServiceResponse> modifyAvaibilityMovie(@PathVariable("id") int id){
 		return movieService.modifyAvaibilityMovie(id);
 	}
+	
+	@PostMapping(value = "/movieId={movieId}&userId={userId}")
+	public ResponseEntity<ServiceResponse> userLikesMovie(@PathVariable("movieId") int movieId, @PathVariable("userId") int userId){
+		return movieService.userLikesMovie(movieId, userId);
+	}
 }

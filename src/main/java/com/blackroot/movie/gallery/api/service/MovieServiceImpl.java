@@ -169,4 +169,19 @@ public class MovieServiceImpl implements MovieService {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@Override
+	public ResponseEntity<ServiceResponse> userLikesMovie(int movieId, int userId) {
+		// TODO Auto-generated method stub
+		try {
+			return new ResponseEntity<ServiceResponse>(
+					new ServiceResponse(ServiceResponse.codeOk, ServiceResponse.messageOk, movieRepository.userLikesMovie(movieId, userId)),
+					HttpStatus.CREATED);
+		} catch (Exception e) {
+			log.error("Issue to user likes a movie" + e.getMessage());
+			return new ResponseEntity<ServiceResponse>(
+					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

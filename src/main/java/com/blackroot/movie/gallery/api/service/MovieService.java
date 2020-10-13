@@ -20,5 +20,6 @@ public interface MovieService {
 
 	public abstract ResponseEntity<ServiceResponse> modifyAvaibilityMovie(int id);
 	
+	public abstract ResponseEntity<ServiceResponse> userLikesMovie(int movieId, int userId);
 	
 }
