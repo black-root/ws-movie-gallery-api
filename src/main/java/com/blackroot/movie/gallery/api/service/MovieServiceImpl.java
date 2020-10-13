@@ -1,7 +1,5 @@
 package com.blackroot.movie.gallery.api.service;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,7 @@ public class MovieServiceImpl implements MovieService {
 
 	@Autowired
 	private MovieRepository movieRepository;
-
+	
 	@Override
 	public ResponseEntity<ServiceResponse> findAll(Integer page, Integer per_page) {
 
@@ -51,9 +49,26 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public ResponseEntity<ServiceResponse> addMovie() {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<ServiceResponse> addMovie(Movie movie) {
+		Movie result =  new Movie();
+		try {
+			//validateService.validator.validate(movie);
+			log.info(movie.toString());
+			result = movieRepository.save(movie);
+			
+			if(result!=null) {
+				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
+						ServiceResponse.messageOk, result), HttpStatus.CREATED);
+			} else {
+				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeFail,
+						ServiceResponse.messageFail, result), HttpStatus.BAD_REQUEST);
+			}
+			
+		} catch (Exception e) {
+			log.error("Problems to process the request "+e.getMessage());
+			return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeFail,
+					ServiceResponse.messageFail, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@Override
