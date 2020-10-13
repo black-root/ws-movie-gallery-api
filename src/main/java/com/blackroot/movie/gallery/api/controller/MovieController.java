@@ -20,8 +20,9 @@ public class MovieController {
 	private MovieService movieService;
 
 	@GetMapping
-	public ResponseEntity<ServiceResponse> findAll() {
-		return movieService.findAll();
+	public ResponseEntity<ServiceResponse> findAll(@PathParam("page")Integer page,
+			@PathParam("per_page") Integer per_page) {
+		return movieService.findAll(page, per_page);
 	}
 
 	@GetMapping(value = "/avaibility={avaibilityStatus}")
@@ -31,8 +32,8 @@ public class MovieController {
 	}
 
 	@GetMapping(value = "/avaibilityTrueForUser")
-	public ResponseEntity<ServiceResponse> findByAvaibilityTrue(@PathParam("per_page") int per_page,
-			@PathParam("page") int page) {
+	public ResponseEntity<ServiceResponse> findByAvaibilityTrue(@PathParam("per_page") Integer per_page,
+			@PathParam("page") Integer page) {
 		return movieService.findByAvailabilityStatusTrue(page, per_page);
 	}
 }
