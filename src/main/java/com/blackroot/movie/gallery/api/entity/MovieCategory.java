@@ -40,6 +40,11 @@ public class MovieCategory implements Serializable{
 		super();
 	}
 
+	public MovieCategory(Integer categoryId) {
+		super();
+		this.id = categoryId;
+	}
+
 	public Integer getId() {
 		return id;
 	}

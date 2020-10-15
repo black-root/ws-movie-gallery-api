@@ -61,6 +61,10 @@ public class PercentDiscount implements Serializable {
 		super();
 	}
 
+	public PercentDiscount(Integer percentId) {
+		this.id =  percentId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -58,7 +58,7 @@ public class Movie implements Serializable {
 	private Date suspend_movie;
 
 	@Column(name = "stock", nullable = false, length = 8)
-	private Short stock;
+	private Integer stock;
 
 	@Column(name = "availability_status")
 	private Boolean availabilityStatus;
@@ -82,6 +82,56 @@ public class Movie implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private MovieCategory category;
+
+	
+	
+	
+	public Movie(Movie movieCopy) {
+		super();
+		this.id = movieCopy.id;
+		this.tittle = movieCopy.tittle;
+		this.description = movieCopy.description;
+		this.synopsis = movieCopy.synopsis;
+		this.image = movieCopy.image;
+		this.sale_price = movieCopy.sale_price;
+		this.rent_price = movieCopy.rent_price;
+		this.startdate_renting = movieCopy.startdate_renting;
+		this.enddate_renting = movieCopy.enddate_renting;
+		this.suspend_movie = movieCopy.suspend_movie;
+		this.stock = movieCopy.stock;
+		this.availabilityStatus = movieCopy.availabilityStatus;
+		this.user = movieCopy.user;
+		this.percent_discount_rent_price = movieCopy.percent_discount_rent_price;
+		this.percent_discount_sale_price = movieCopy.percent_discount_sale_price;
+		this.category = movieCopy.category;
+	}
+
+	public Movie(Integer id, String tittle, String description, String synopsis, String image, BigDecimal sale_price,
+			BigDecimal rent_price, Date startdate_renting, Date enddate_renting, Date suspend_movie, Integer stock,
+			Boolean availabilityStatus, User user, PercentDiscount percent_discount_rent_price,
+			PercentDiscount percent_discount_sale_price, MovieCategory category) {
+		super();
+		this.id = id;
+		this.tittle = tittle;
+		this.description = description;
+		this.synopsis = synopsis;
+		this.image = image;
+		this.sale_price = sale_price;
+		this.rent_price = rent_price;
+		this.startdate_renting = startdate_renting;
+		this.enddate_renting = enddate_renting;
+		this.suspend_movie = suspend_movie;
+		this.stock = stock;
+		this.availabilityStatus = availabilityStatus;
+		this.user = user;
+		this.percent_discount_rent_price = percent_discount_rent_price;
+		this.percent_discount_sale_price = percent_discount_sale_price;
+		this.category = category;
+	}
+
+	public Movie() {
+		super();
+	}
 
 	public User getUser() {
 		return user;
@@ -195,11 +245,11 @@ public class Movie implements Serializable {
 		this.suspend_movie = suspend_movie;
 	}
 
-	public Short getStock() {
+	public Integer getStock() {
 		return stock;
 	}
 
-	public void setStock(Short stock) {
+	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blackroot.movie.gallery.api.dto.MovieRequest;
 import com.blackroot.movie.gallery.api.entity.Movie;
 import com.blackroot.movie.gallery.api.service.MovieService;
 import com.blackroot.movie.gallery.api.utils.ServiceResponse;
@@ -60,5 +61,11 @@ public class MovieController {
 	@PostMapping(value = "/movieId={movieId}&userId={userId}")
 	public ResponseEntity<ServiceResponse> userLikesMovie(@PathVariable("movieId") int movieId, @PathVariable("userId") int userId){
 		return movieService.userLikesMovie(movieId, userId);
+	}
+	
+	@PutMapping
+	public ResponseEntity<ServiceResponse> updateMovie(@RequestBody MovieRequest movie){
+		return movieService.updateMovie(movie);
+		
 	}
 }
