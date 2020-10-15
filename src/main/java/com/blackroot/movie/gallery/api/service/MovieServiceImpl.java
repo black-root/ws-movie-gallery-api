@@ -197,11 +197,11 @@ public class MovieServiceImpl implements MovieService {
 		log.info(movieRequest.toString());
 		Movie movie = new Movie();
 		Movie movieLog;
-		
+
 		try {
 			if (movieRequest.getId() > 0)
 				movie = movieRepository.findById(movieRequest.getId()).get();
-				movieLog=  new Movie(movie);
+			movieLog = new Movie(movie);
 			log.info(movieLog.getTittle());
 
 		} catch (Exception e) {
@@ -237,15 +237,16 @@ public class MovieServiceImpl implements MovieService {
 					if (movieRequest.getStock() > 0)
 						movie.setStock(movieRequest.getStock());
 				}
-				
+
 				log.info(movieLog.toString());
 				movie = movieRepository.save(movie);
-				
+
 				if (!movieLog.getTittle().equals(movie.getTittle())
-						|| (!(movieLog.getSale_price().compareTo(movie.getSale_price())==0))
-						|| (!(movieLog.getRent_price().compareTo(movie.getRent_price())==0))) {
-					//log.info("old tittle "+movieLog.getTittle()+" new tittle"+movie.getTittle());
-					//log.info("old sale price "+movieLog.getSale_price()+" new sale price"+movie.getSale_price());
+						|| (!(movieLog.getSale_price().compareTo(movie.getSale_price()) == 0))
+						|| (!(movieLog.getRent_price().compareTo(movie.getRent_price()) == 0))) {
+					// log.info("old tittle "+movieLog.getTittle()+" new tittle"+movie.getTittle());
+					// log.info("old sale price "+movieLog.getSale_price()+" new sale
+					// price"+movie.getSale_price());
 					movieRepository.movieUpdated(movieLog.getId(), movieLog.getTittle(), movieLog.getRent_price(),
 							movieLog.getSale_price());
 
@@ -261,8 +262,37 @@ public class MovieServiceImpl implements MovieService {
 								"Error to update the movie with id: " + movieRequest.getId() + "\n" + e.getMessage()),
 						HttpStatus.BAD_REQUEST);
 			}
+		} else {
+			return new ResponseEntity<ServiceResponse>(
+					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail,
+							"Error to update the movie with id: " + movieRequest.getId()),
+					HttpStatus.NOT_FOUND);
 		}
-
-		return null;
 	}
+
+	@Override
+	public ResponseEntity<ServiceResponse> findByTitle(String title, Integer page, Integer per_page) {
+		try {
+
+			if (page != null || per_page != null) {
+				Pageable sortedBytitle = PageRequest.of(page, per_page, Sort.by("tittle"));
+				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
+						ServiceResponse.messageOk, movieRepository.findByTittleContaining(title, sortedBytitle)),
+						HttpStatus.OK);
+			} else {
+				Pageable sortedBytitle = PageRequest.of(0, 10, Sort.by("tittle"));
+				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
+						ServiceResponse.messageOk, movieRepository.findByTittleContaining(title, sortedBytitle)),
+						HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error("Issue to find the data " + e.getMessage());
+			return new ResponseEntity<ServiceResponse>(
+					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

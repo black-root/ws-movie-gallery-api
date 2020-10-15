@@ -30,5 +30,7 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
 			@Param("p_tittle") String tittle,
 			@Param("p_rent_price") BigDecimal rentPrice,
 			@Param("p_sale_price") BigDecimal salePrice);
+	
+	public Page<Movie> findByTittleContaining(String tittle, Pageable pageable);
 
 }

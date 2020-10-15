@@ -43,6 +43,13 @@ public class MovieController {
 		return movieService.findByAvailabilityStatusTrue(page, per_page);
 	}
 	
+	@GetMapping(value = "/findByTitle/{title}")
+	public ResponseEntity<ServiceResponse> findByTitle(@PathVariable("title") String title,
+			@PathParam("per_page") Integer per_page,
+			@PathParam("page") Integer page) {
+		return movieService.findByTitle(title,page, per_page);
+	}
+	
 	@PostMapping
 	public ResponseEntity<ServiceResponse> addMovie(@RequestBody Movie movie){
 		return movieService.addMovie(movie);
@@ -65,7 +72,6 @@ public class MovieController {
 	
 	@PutMapping
 	public ResponseEntity<ServiceResponse> updateMovie(@RequestBody MovieRequest movie){
-		return movieService.updateMovie(movie);
-		
+		return movieService.updateMovie(movie);	
 	}
 }

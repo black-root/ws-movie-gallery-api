@@ -24,5 +24,7 @@ public interface MovieService {
 	public abstract ResponseEntity<ServiceResponse> userLikesMovie(int movieId, int userId);
 
 	public abstract ResponseEntity<ServiceResponse> updateMovie(MovieRequest movie);
+
+	public abstract ResponseEntity<ServiceResponse> findByTitle(String title, Integer page, Integer per_page);
 	
 }
