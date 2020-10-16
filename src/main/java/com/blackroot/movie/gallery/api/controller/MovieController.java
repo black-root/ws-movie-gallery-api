@@ -42,8 +42,8 @@ public class MovieController {
 
 	@GetMapping(value = "/avaibilityTrueForUser")
 	public ResponseEntity<ServiceResponse> findByAvaibilityTrue(@PathParam("per_page") Integer per_page,
-			@PathParam("page") Integer page) {
-		return movieService.findByAvailabilityStatusTrue(page, per_page);
+			@PathParam("page") Integer page, @RequestHeader(value = "Authorization", required = false) String jwt) {
+		return movieService.findByAvailabilityStatusTrue(page, per_page, jwt);
 	}
 	
 	@GetMapping(value = "/findByTitle/{title}")

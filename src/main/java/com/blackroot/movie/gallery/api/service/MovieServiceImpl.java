@@ -145,9 +145,20 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public ResponseEntity<ServiceResponse> findByAvailabilityStatusTrue(Integer page, Integer per_page) {
+	public ResponseEntity<ServiceResponse> findByAvailabilityStatusTrue(Integer page, Integer per_page, String jwt) {
 		try {
 
+			if (jwt == null || jwt.isEmpty())
+				throw new IllegalArgumentException("El token no puede estar vacío!");
+			Rol rol = jwtUtil.validateToken(jwt);
+
+			// log.info(username.toString());
+			if(!rol.getCode().equals("0001")) {
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, "Only Admin can access, your rol is: "+rol.getName()),
+						HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+			}
+			
 			if (page != null || per_page != null) {
 				Pageable sortedBytitle = PageRequest.of(page, per_page, Sort.by("tittle"));
 				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
