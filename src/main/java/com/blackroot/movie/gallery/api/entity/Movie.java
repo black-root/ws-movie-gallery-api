@@ -66,7 +66,7 @@ public class Movie implements Serializable {
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "creator_id")
-	private User user;
+	private UserEntity user;
 
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -108,7 +108,7 @@ public class Movie implements Serializable {
 
 	public Movie(Integer id, String tittle, String description, String synopsis, String image, BigDecimal sale_price,
 			BigDecimal rent_price, Date startdate_renting, Date enddate_renting, Date suspend_movie, Integer stock,
-			Boolean availabilityStatus, User user, PercentDiscount percent_discount_rent_price,
+			Boolean availabilityStatus, UserEntity user, PercentDiscount percent_discount_rent_price,
 			PercentDiscount percent_discount_sale_price, MovieCategory category) {
 		super();
 		this.id = id;
@@ -133,11 +133,11 @@ public class Movie implements Serializable {
 		super();
 	}
 
-	public User getUser() {
+	public UserEntity getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserEntity user) {
 		this.user = user;
 	}
 
