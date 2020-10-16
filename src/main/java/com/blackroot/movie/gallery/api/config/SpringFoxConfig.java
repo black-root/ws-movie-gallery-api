@@ -12,12 +12,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class SpringFoxConfig {
-
 	@Bean
 	public Docket productApi() {
-		return new Docket(DocumentationType.SWAGGER_2).select()
+		return new Docket(DocumentationType.SWAGGER_2)
+				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.blackroot.movie.gallery.api.controller"))
 				.paths(PathSelectors.any()).build();
 	}
-
+	
+	
 }
