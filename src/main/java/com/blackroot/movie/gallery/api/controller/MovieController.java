@@ -54,27 +54,33 @@ public class MovieController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ServiceResponse> addMovie(@RequestBody Movie movie){
-		return movieService.addMovie(movie);
+	public ResponseEntity<ServiceResponse> addMovie(@RequestBody Movie movie,
+			@RequestHeader(value = "Authorization", required = false)  String jwt){
+		return movieService.addMovie(movie, jwt);
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<ServiceResponse> deleteMovieById(@PathVariable("id") int id){
-		return movieService.deleteMovie(id);
+	public ResponseEntity<ServiceResponse> deleteMovieById(@PathVariable("id") int id,
+			@RequestHeader(value = "Authorization", required = false)  String jwt){
+		return movieService.deleteMovie(id, jwt);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<ServiceResponse> modifyAvaibilityMovie(@PathVariable("id") int id){
-		return movieService.modifyAvaibilityMovie(id);
+	public ResponseEntity<ServiceResponse> modifyAvaibilityMovie(@PathVariable("id") int id,
+			@RequestHeader(value = "Authorization", required = false)  String jwt){
+		return movieService.modifyAvaibilityMovie(id, jwt);
 	}
 	
 	@PostMapping(value = "/movieId={movieId}&userId={userId}")
-	public ResponseEntity<ServiceResponse> userLikesMovie(@PathVariable("movieId") int movieId, @PathVariable("userId") int userId){
-		return movieService.userLikesMovie(movieId, userId);
+	public ResponseEntity<ServiceResponse> userLikesMovie(@PathVariable("movieId") int movieId,
+			@PathVariable("userId") int userId,
+			@RequestHeader(value = "Authorization", required = false)  String jwt){
+		return movieService.userLikesMovie(movieId, userId, jwt);
 	}
 	
 	@PutMapping
-	public ResponseEntity<ServiceResponse> updateMovie(@RequestBody MovieRequest movie){
-		return movieService.updateMovie(movie);	
+	public ResponseEntity<ServiceResponse> updateMovie(@RequestBody MovieRequest movie,
+			@RequestHeader(value = "Authorization", required = false)  String jwt){
+		return movieService.updateMovie(movie, jwt);	
 	}
 }

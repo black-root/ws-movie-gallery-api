@@ -65,9 +65,21 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public ResponseEntity<ServiceResponse> addMovie(Movie movie) {
+	public ResponseEntity<ServiceResponse> addMovie(Movie movie, String jwt) {
 		Movie result = new Movie();
 		try {
+			
+			if (jwt == null || jwt.isEmpty())
+				throw new IllegalArgumentException("El token no puede estar vacío!");
+			Rol rol = jwtUtil.validateToken(jwt);
+
+			// log.info(username.toString());
+			if(!rol.getCode().equals("0001")) {
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, "Only Admin can access, your rol is: "+rol.getName()),
+						HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+			}
+			
 			// validateService.validator.validate(movie);
 			log.info(movie.toString());
 			result = movieRepository.save(movie);
@@ -91,8 +103,20 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public ResponseEntity<ServiceResponse> deleteMovie(int idMovie) {
+	public ResponseEntity<ServiceResponse> deleteMovie(int idMovie, String jwt) {
 		try {
+			
+			if (jwt == null || jwt.isEmpty())
+				throw new IllegalArgumentException("El token no puede estar vacío!");
+			Rol rol = jwtUtil.validateToken(jwt);
+
+			// log.info(username.toString());
+			if(!rol.getCode().equals("0001")) {
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, "Only Admin can access, your rol is: "+rol.getName()),
+						HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+			}
+			
 			movieRepository.deleteById(idMovie);
 			return new ResponseEntity<ServiceResponse>(
 					new ServiceResponse(ServiceResponse.codeOk, ServiceResponse.messageOk, "Movie deleted"),
@@ -181,8 +205,20 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public ResponseEntity<ServiceResponse> modifyAvaibilityMovie(int id) {
+	public ResponseEntity<ServiceResponse> modifyAvaibilityMovie(int id, String jwt) {
 		try {
+			
+			if (jwt == null || jwt.isEmpty())
+				throw new IllegalArgumentException("El token no puede estar vacío!");
+			Rol rol = jwtUtil.validateToken(jwt);
+
+			// log.info(username.toString());
+			if(!rol.getCode().equals("0001")) {
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, "Only Admin can access, your rol is: "+rol.getName()),
+						HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+			}
+			
 			Movie movie = movieRepository.findById(id).get(), result;
 
 			if (movie != null) {
@@ -210,9 +246,21 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public ResponseEntity<ServiceResponse> userLikesMovie(int movieId, int userId) {
+	public ResponseEntity<ServiceResponse> userLikesMovie(int movieId, int userId, String jwt) {
 		// TODO Auto-generated method stub
 		try {
+			if (jwt == null || jwt.isEmpty())
+				throw new IllegalArgumentException("El token no puede estar vacío!");
+			Rol rol = jwtUtil.validateToken(jwt);
+
+			// log.info(username.toString());
+			if(!rol.getCode().equals("0003")) {
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, "Only Custoemr can access, your rol is: "+rol.getName()),
+						HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+			}
+			
+			
 			return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
 					ServiceResponse.messageOk, movieRepository.userLikesMovie(movieId, userId)), HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -225,12 +273,23 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<ServiceResponse> updateMovie(MovieRequest movieRequest) {
+	public ResponseEntity<ServiceResponse> updateMovie(MovieRequest movieRequest, String jwt) {
 
 		log.info(movieRequest.toString());
 		Movie movie = new Movie();
 		Movie movieLog;
 
+		if (jwt == null || jwt.isEmpty())
+			throw new IllegalArgumentException("El token no puede estar vacío!");
+		Rol rol = jwtUtil.validateToken(jwt);
+
+		// log.info(username.toString());
+		if(!rol.getCode().equals("0001")) {
+			return new ResponseEntity<ServiceResponse>(
+					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, "Only Admin can access, your rol is: "+rol.getName()),
+					HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+		}
+		
 		try {
 			if (movieRequest.getId() > 0)
 				movie = movieRepository.findById(movieRequest.getId()).get();
