@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,9 +33,11 @@ public class MovieController {
 	}
 
 	@GetMapping(value = "/avaibility={avaibilityStatus}")
-	public ResponseEntity<ServiceResponse> findByAvaibility(@PathVariable("avaibilityStatus") boolean avaibilityStatus,
-			@PathParam("per_page") Integer per_page, @PathParam("page") Integer page) {
-		return movieService.findByAvailabilityStatus(avaibilityStatus, page, per_page);
+	public ResponseEntity<ServiceResponse> findByAvaibility(
+			@PathVariable("avaibilityStatus") boolean avaibilityStatus,
+			@PathParam("per_page") Integer per_page, @PathParam("page") Integer page,
+			@RequestHeader(value = "Authorization", required = false)  String jwt) {
+		return movieService.findByAvailabilityStatus(avaibilityStatus, page, per_page, jwt);
 	}
 
 	@GetMapping(value = "/avaibilityTrueForUser")

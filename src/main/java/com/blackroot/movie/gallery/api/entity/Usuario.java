@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "User")
-public class UserEntity implements Serializable {
+public class Usuario implements Serializable {
 
 	/**
 	 * 
@@ -70,15 +70,12 @@ public class UserEntity implements Serializable {
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private Set<Movie> movie;
 	
-	@Column(name = "actived")
-	private boolean actived;
-	
-	public UserEntity() {
+	public Usuario() {
 		super();
 	}
 
-	public UserEntity(Integer id, String name, String lastname, String email, String phones, String address, String document,
-			String url_picture, String password, Date birthdate, Rol rol, boolean actived) {
+	public Usuario(Integer id, String name, String lastname, String email, String phones, String address, String document,
+			String url_picture, String password, Date birthdate, Rol rol) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -91,15 +88,6 @@ public class UserEntity implements Serializable {
 		this.password = password;
 		this.birthdate = birthdate;
 		this.rol = rol;
-		this.actived =  actived;
-	}
-
-	public boolean isActived() {
-		return actived;
-	}
-
-	public void setActived(boolean actived) {
-		this.actived = actived;
 	}
 
 	public Integer getId() {
@@ -216,7 +204,7 @@ public class UserEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserEntity other = (UserEntity) obj;
+		Usuario other = (Usuario) obj;
 		if (address == null) {
 			if (other.address != null)
 				return false;
@@ -279,8 +267,7 @@ public class UserEntity implements Serializable {
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", lastname=" + lastname + ", email=" + email + ", phones="
 				+ phones + ", address=" + address + ", document=" + document + ", url_picture=" + url_picture
-				+ ", password=" + password + ", birthdate=" + birthdate + ", rol=" + rol + ", movie=" + movie
-				+ ", actived=" + actived + "]";
+				+ ", password=" + password + ", birthdate=" + birthdate + ", rol=" + rol + "]";
 	}
 
 }

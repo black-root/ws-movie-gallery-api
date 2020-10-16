@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.blackroot.movie.gallery.api.entity.UserEntity;
+import com.blackroot.movie.gallery.api.entity.Usuario;
 import com.blackroot.movie.gallery.api.repository.UserRepository;
 import com.blackroot.movie.gallery.api.utils.ServiceResponse;
 
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		UserEntity user = userRepository.findByEmail(email);
+		Usuario user = userRepository.findByEmail(email);
 		return new User(user.getEmail(), user.getPassword(), new ArrayList<>());
 	}
 }

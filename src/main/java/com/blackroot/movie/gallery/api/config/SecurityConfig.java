@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.blackroot.movie.gallery.api.entity.UserEntity;
 import com.blackroot.movie.gallery.api.service.UserServiceImpl;
 
 @Configuration

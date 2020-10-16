@@ -36,7 +36,7 @@ public class Rol implements Serializable{
 	private String code;
 	
 	@OneToMany(mappedBy = "rol", fetch = FetchType.LAZY)
-	private Set<UserEntity> user;
+	private Set<Usuario> user;
 
 	public Rol(Integer id, String name, String description, String code) {
 		super();

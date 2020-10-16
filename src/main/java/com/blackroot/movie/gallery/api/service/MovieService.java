@@ -15,7 +15,8 @@ public interface MovieService {
 	
 	public abstract ResponseEntity<ServiceResponse> deleteMovie(int idMovie);
 	
-	public abstract ResponseEntity<ServiceResponse> findByAvailabilityStatus(boolean avaibility, Integer page, Integer per_page);
+	public abstract ResponseEntity<ServiceResponse> findByAvailabilityStatus(boolean avaibility, Integer page, Integer per_page,
+			String jwt);
 
 	public abstract ResponseEntity<ServiceResponse> findByAvailabilityStatusTrue(Integer page, Integer per_page);
 

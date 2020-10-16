@@ -19,7 +19,9 @@ import com.blackroot.movie.gallery.api.dto.MovieRequest;
 import com.blackroot.movie.gallery.api.entity.Movie;
 import com.blackroot.movie.gallery.api.entity.MovieCategory;
 import com.blackroot.movie.gallery.api.entity.PercentDiscount;
+import com.blackroot.movie.gallery.api.entity.Rol;
 import com.blackroot.movie.gallery.api.repository.MovieRepository;
+import com.blackroot.movie.gallery.api.utils.JwtUtil;
 import com.blackroot.movie.gallery.api.utils.ServiceResponse;
 
 @Service
@@ -30,6 +32,13 @@ public class MovieServiceImpl implements MovieService {
 	@Autowired
 	private MovieRepository movieRepository;
 
+	@Autowired
+	private JwtUtil jwtUtil;
+
+	/*
+	 * @Autowired private ValidateService val;
+	 * 
+	 */
 	@Override
 	public ResponseEntity<ServiceResponse> findAll(Integer page, Integer per_page) {
 
@@ -98,9 +107,22 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public ResponseEntity<ServiceResponse> findByAvailabilityStatus(boolean avaibility, Integer page,
-			Integer per_page) {
+	public ResponseEntity<ServiceResponse> findByAvailabilityStatus(boolean avaibility, Integer page, Integer per_page,
+			String jwt) {
 		try {
+
+			// val.validator.validate(avaibility);
+
+			if (jwt == null || jwt.isEmpty())
+				throw new IllegalArgumentException("El token no puede estar vacío!");
+			Rol rol = jwtUtil.validateToken(jwt);
+
+			// log.info(username.toString());
+			if(!rol.getCode().equals("0001")) {
+				return new ResponseEntity<ServiceResponse>(
+						new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail, "Only Admin can access, your rol is: "+rol.getName()),
+						HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+			}
 			if (page != null || per_page != null) {
 				Pageable sortedBytitle = PageRequest.of(page, per_page, Sort.by("tittle"));
 				return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeOk,
@@ -263,9 +285,8 @@ public class MovieServiceImpl implements MovieService {
 						HttpStatus.BAD_REQUEST);
 			}
 		} else {
-			return new ResponseEntity<ServiceResponse>(
-					new ServiceResponse(ServiceResponse.codeFail, ServiceResponse.messageFail,
-							"Error to update the movie with id: " + movieRequest.getId()),
+			return new ResponseEntity<ServiceResponse>(new ServiceResponse(ServiceResponse.codeFail,
+					ServiceResponse.messageFail, "Error to update the movie with id: " + movieRequest.getId()),
 					HttpStatus.NOT_FOUND);
 		}
 	}
