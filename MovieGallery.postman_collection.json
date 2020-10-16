@@ -1,0 +1,417 @@
+{
+	"info": {
+		"_postman_id": "20124473-0230-44a4-9096-5160262ecea4",
+		"name": "MovieGallery",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Movie",
+			"item": [
+				{
+					"name": "movie",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwZWRyby5qaW1lbmV6QHlvcG1haWwuY29tIiwiZXhwIjoxNjAyODk5NTU2LCJpYXQiOjE2MDI4Mjc1NTZ9.STI1UMW9_t31ET_Ol9P0x8UjsggTUbo13geHAXUK1EQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwZWRyby5qaW1lbmV6QHlvcG1haWwuY29tIiwiZXhwIjoxNjAyODk5NTU2LCJpYXQiOjE2MDI4Mjc1NTZ9.STI1UMW9_t31ET_Ol9P0x8UjsggTUbo13geHAXUK1EQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/movies/avaibilityTrueForUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"movies",
+								"avaibilityTrueForUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findMoviesByAvaility",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/movies/avaibility=true?page=0&per_page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"movies",
+								"avaibility=true"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addMovie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZWRyby5qaW1lbmV6QHlvcG1haWwuY29tIiwiZXhwIjoxNjAyOTAxNTc0LCJpYXQiOjE2MDI4Mjk1NzR9.lDDjoRi9uUsiAKBs9uTyUyTwaj9Cyfn-R0raD0jVzp4rJz7iTJ90HOMg6rQh3Cb8xw6ol8L-pcc38avMv-IuiQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tittle\":\"Dark\",\r\n    \"category\":{\r\n        \"id\":1\r\n    }, \"sale_price\":12,\r\n    \"startdate_renting\": \"2020-10-01\",\r\n    \"enddate_renting\": \"2020-10-21\",\r\n    \"stock\":122,\r\n    \"availabilityStatus\":true,\r\n    \"rent_price\":12.2,\r\n    \"user\": {\"id\":1}\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMovieById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZWRyby5qaW1lbmV6QHlvcG1haWwuY29tIiwiZXhwIjoxNjAyOTAxNTc0LCJpYXQiOjE2MDI4Mjk1NzR9.lDDjoRi9uUsiAKBs9uTyUyTwaj9Cyfn-R0raD0jVzp4rJz7iTJ90HOMg6rQh3Cb8xw6ol8L-pcc38avMv-IuiQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/movies/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"movies",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changeAvaiblityMovie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZWRyby5qaW1lbmV6QHlvcG1haWwuY29tIiwiZXhwIjoxNjAyOTAxNTc0LCJpYXQiOjE2MDI4Mjk1NzR9.lDDjoRi9uUsiAKBs9uTyUyTwaj9Cyfn-R0raD0jVzp4rJz7iTJ90HOMg6rQh3Cb8xw6ol8L-pcc38avMv-IuiQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/movies/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"movies",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userLikesAmovie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXVyYS5oZXJuYW5kZXpAeW9wbWFpbC5jb20iLCJleHAiOjE2MDI5MDAwODEsImlhdCI6MTYwMjgyODA4MX0.Xe3CDmgW3HV2F604YdTuW1a-ltBWC9w_0oQHTD6k7a_6biT81LTZA6gfm_pFGMP8NjSe2zHeQOnlXmu6w7vkyQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/movies/movieId=3&userId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"movies",
+								"movieId=3&userId=1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateMovie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZWRyby5qaW1lbmV6QHlvcG1haWwuY29tIiwiZXhwIjoxNjAyOTAxNTc0LCJpYXQiOjE2MDI4Mjk1NzR9.lDDjoRi9uUsiAKBs9uTyUyTwaj9Cyfn-R0raD0jVzp4rJz7iTJ90HOMg6rQh3Cb8xw6ol8L-pcc38avMv-IuiQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n                \"id\": 1,\r\n                \"tittle\": \"Toy Story\",\r\n                \"sale_price\":21,\r\n                \"rent_price\": 2\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findMovieByTitle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/movies/findByTitle/toy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"movies",
+								"findByTitle",
+								"toy"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "AuthAdminLogin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"pedro.jimenez@yopmail.com\",\r\n    \"password\":\"1234\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AuthCustomerLogin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"laura.hernandez@yopmail.com\",\r\n    \"password\":\"1234\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "welcome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/movie-gallery/api/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie-gallery",
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
